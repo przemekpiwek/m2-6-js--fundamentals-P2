@@ -2,12 +2,12 @@
 // below is an example of an array of objects, where each object represents a person:
 
 const people = [
-  { name: { first: 'Alyssa', middle: 'P.', last: 'Hacker' }, age: 26 },
-  { name: { first: 'Ben', last: 'Bitdiddle' }, age: 34 },
-  { name: { first: 'Eva', middle: 'Lu', last: 'Ator' }, age: 40 },
-  { name: { first: 'Lem', middle: 'E.', last: 'Tweakit' }, age: 45 },
-  { name: { first: 'Louis', last: 'Reasoner' }, age: 21 },
-  { name: { first: 'Shahan', middle: 'Haig', last: 'Krakirian' }, age: 21 },
+  { name: { first: "Alyssa", middle: "P.", last: "Hacker" }, age: 26 },
+  { name: { first: "Ben", last: "Bitdiddle" }, age: 34 },
+  { name: { first: "Eva", middle: "Lu", last: "Ator" }, age: 40 },
+  { name: { first: "Lem", middle: "E.", last: "Tweakit" }, age: 45 },
+  { name: { first: "Louis", last: "Reasoner" }, age: 21 },
+  { name: { first: "Shahan", middle: "Haig", last: "Krakirian" }, age: 21 },
 ];
 
 // Exercise 5.0
@@ -16,6 +16,9 @@ const people = [
 // `name` key does not have the same "shape" as the ones above, make sure you
 // change it to look like these).
 
+let Me = { name: { first: "Przemek", last: "Piwek" }, age: 25 };
+people.push(Me);
+
 //-------------------------------------------------
 
 // Exercise 5.1
@@ -23,7 +26,11 @@ const people = [
 // Write a function that returns the average age of the `people` array.
 
 function avgAge(peopleArr) {
-  // Yuor code here
+  let sum = 0;
+  people.forEach((person) => {
+    sum += person.age;
+  });
+  return sum / people.length;
 }
 
 console.log(`Average age is ${avgAge(people)}.`);
@@ -37,7 +44,17 @@ console.log(`Average age is ${avgAge(people)}.`);
 // Can you make use of your `fullName` function here?
 
 function fullName(peopleArr) {
-  // Your code here
+  let result = [];
+  peopleArr.forEach((person) => {
+    if (person.name.middle) {
+      result.push(
+        `${person.name.first} ${person.name.middle} ${person.name.last}`
+      );
+    } else {
+      result.push(`${person.name.first} ${person.name.last}`);
+    }
+  });
+  return result;
 }
 
 console.log(fullName(people));
@@ -51,6 +68,13 @@ console.log(fullName(people));
 
 function olderPeople(peopleArr, age) {
   // Your code here
+  let result = [];
+  peopleArr.forEach((person) => {
+    if (person.age > age) {
+      result.push(person);
+    }
+  });
+  return result;
 }
 
 console.log(olderPeople(people, 26));

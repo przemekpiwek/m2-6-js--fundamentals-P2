@@ -7,30 +7,30 @@
  */
 
 let inputData = {
-  name: 'Will Byers',
+  name: "Will Byers",
   age: 9,
-  status: 'upside down',
-  superpower1: 'can-blink-lights',
+  status: "upside down",
+  superpower1: "can-blink-lights",
   superpower2: null,
-  address1: '123 Whatever street',
-  addressCity: 'Hawkins',
-  addressState: 'Indiana',
-  addressCountry: 'United States',
-  motherName: 'Joyce Byers',
+  address1: "123 Whatever street",
+  addressCity: "Hawkins",
+  addressState: "Indiana",
+  addressCountry: "United States",
+  motherName: "Joyce Byers",
   motherAge: 35,
-  motherStatus: 'worried',
+  motherStatus: "worried",
   motherSuperpower1: null,
   motherSuperpower1: null,
-  bestFriendName: 'Mike Wheeler',
+  bestFriendName: "Mike Wheeler",
   bestFriendAge: 9,
-  bestFriendStatus: 'frenetic',
+  bestFriendStatus: "frenetic",
   bestFriendSuperpower1: null,
-  bestFriendSuperpower1: null,
-  girlfriendName: 'Eleven',
+  bestFriendSuperpower2: null,
+  girlfriendName: "Eleven",
   girlfriendAge: 9,
-  girlfriendStatus: 'angry',
-  girlfriendSuperpower1: 'telepathy',
-  girlfriendSuperpower1: 'multiverse portal sealing',
+  girlfriendStatus: "angry",
+  girlfriendSuperpower1: "telepathy",
+  girlfriendSuperpower2: "multiverse portal sealing",
 };
 
 /*
@@ -88,9 +88,58 @@ For example, the main superpowers array should be:
 */
 
 function transformData(data) {
-  // Your code here
+  let newObj = {
+    name: data.name,
+    age: data.age,
+    status: data.status,
+    address: {
+      streetAddress: data.address1,
+      city: data.addressCity,
+      state: data.addressState,
+      country: data.addressCountry,
+    },
+  };
+  newObj.superpowers = addSuperPower(data.superpower1, data.superpower2);
+  newObj.relationships = addRelationship(data);
+  return newObj;
 }
 
+function addSuperPower(superpower1, superpower2) {
+  if (superpower1 && superpower2) {
+    return [superpower1, superpower2];
+  } else if (superpower1) {
+    return [superpower1];
+  } else {
+    return [];
+  }
+}
+function addRelationship(data) {
+  let mother = {
+    type: "mother",
+    name: data.motherName,
+    age: data.motherAge,
+    status: data.motherStatus,
+    superpower: addSuperPower(data.motherSuperpower1),
+  };
+  let bestFriend = {
+    type: "best friend",
+    name: data.bestFriendName,
+    age: data.bestFriendAge,
+    status: data.bestFriendStatus,
+    superpower: addSuperPower(data.bestFriendSuperpower1),
+  };
+  let girlfriend = {
+    type: "girlfriend",
+    name: data.girlfriendName,
+    age: data.girlfriendAge,
+    status: data.bestFriendStatus,
+    superpower: addSuperPower(
+      data.girlfriendSuperpower1,
+      data.girlfriendSuperpower2
+    ),
+  };
+  return [mother, bestFriend, girlfriend];
+}
 /*
   `JSON.stringify` is used to "pretty-print" the output, so that it's easy
   to see what it looks like, and debug any problems.
